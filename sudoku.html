@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>Sudoku</title>
+  <link rel="stylesheet" href="vendors/bootstrap-4.3.1/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="css/juego.css" />
+</head>
+
+<body>
+  <div class="container">
+    <h1>Sudoku</h1>
+    <!-- boton de nuevo juego -->
+    <button id="botonNuevoJuego" class="btn btn-sm btn-primary">
+      Nuevo juego
+    </button>
+
+    <!-- controles del juego -->
+    <nav id="controlesNuevoJuego">
+      <ul class="pagination pagination-sm">
+        <li class="page-item active" numero="0">
+          <a class="page-link" href="#">borrar</a>
+        </li>
+        <li class="page-item" numero="1">
+          <a class="page-link" href="#">1</a>
+        </li>
+        <li class="page-item" numero="2">
+          <a class="page-link" href="#">2</a>
+        </li>
+        <li class="page-item" numero="3">
+          <a class="page-link" href="#">3</a>
+        </li>
+        <li class="page-item" numero="4">
+          <a class="page-link" href="#">4</a>
+        </li>
+        <li class="page-item" numero="5">
+          <a class="page-link" href="#">5</a>
+        </li>
+        <li class="page-item" numero="6">
+          <a class="page-link" href="#">6</a>
+        </li>
+        <li class="page-item" numero="7">
+          <a class="page-link" href="#">7</a>
+        </li>
+        <li class="page-item" numero="8">
+          <a class="page-link" href="#">8</a>
+        </li>
+        <li class="page-item" numero="9">
+          <a class="page-link" href="#">9</a>
+        </li>
+        <li>
+          <span id="labelTimer"></span>
+        </li>
+      </ul>
+    </nav>
+    <!-- fin de controles del juego -->
+
+    <!-- mensaje de error -->
+    <div id="mensajeError" class="alert alert-danger alert-dismissible fade show" role="alert">
+      <strong>Error!</strong> La jugada no es válida!
+    </div>
+
+    <!-- mensaje ganador -->
+    <div id="mensajeGanador" class="alert alert-success alert-dismissible fade show" role="alert">
+      <strong>Yeeiii!</strong> Has terminado el juego!
+      <!-- Boton que muestra el modal para guardar el tiempo-->
+      <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#modalNuevoTiempo"
+        data-whatever="@mdo">
+        guardar?
+      </button>
+    </div>
+
+    <!-- tablero -->
+    <table>
+      <tr>
+        <td fila="0" col="0"></td>
+        <td fila="0" col="1"></td>
+        <td fila="0" col="2"></td>
+        <td fila="0" col="3"></td>
+        <td fila="0" col="4"></td>
+        <td fila="0" col="5"></td>
+        <td fila="0" col="6"></td>
+        <td fila="0" col="7"></td>
+        <td fila="0" col="8"></td>
+      </tr>
+      <tr>
+        <td fila="1" col="0"></td>
+        <td fila="1" col="1"></td>
+        <td fila="1" col="2"></td>
+        <td fila="1" col="3"></td>
+        <td fila="1" col="4"></td>
+        <td fila="1" col="5"></td>
+        <td fila="1" col="6"></td>
+        <td fila="1" col="7"></td>
+        <td fila="1" col="8"></td>
+      </tr>
+      <tr>
+        <td fila="2" col="0"></td>
+        <td fila="2" col="1"></td>
+        <td fila="2" col="2"></td>
+        <td fila="2" col="3"></td>
+        <td fila="2" col="4"></td>
+        <td fila="2" col="5"></td>
+        <td fila="2" col="6"></td>
+        <td fila="2" col="7"></td>
+        <td fila="2" col="8"></td>
+      </tr>
+      <tr>
+        <td fila="3" col="0"></td>
+        <td fila="3" col="1"></td>
+        <td fila="3" col="2"></td>
+        <td fila="3" col="3"></td>
+        <td fila="3" col="4"></td>
+        <td fila="3" col="5"></td>
+        <td fila="3" col="6"></td>
+        <td fila="3" col="7"></td>
+        <td fila="3" col="8"></td>
+      </tr>
+      <tr>
+        <td fila="4" col="0"></td>
+        <td fila="4" col="1"></td>
+        <td fila="4" col="2"></td>
+        <td fila="4" col="3"></td>
+        <td fila="4" col="4"></td>
+        <td fila="4" col="5"></td>
+        <td fila="4" col="6"></td>
+        <td fila="4" col="7"></td>
+        <td fila="4" col="8"></td>
+      </tr>
+      <tr>
+        <td fila="5" col="0"></td>
+        <td fila="5" col="1"></td>
+        <td fila="5" col="2"></td>
+        <td fila="5" col="3"></td>
+        <td fila="5" col="4"></td>
+        <td fila="5" col="5"></td>
+        <td fila="5" col="6"></td>
+        <td fila="5" col="7"></td>
+        <td fila="5" col="8"></td>
+      </tr>
+      <tr>
+        <td fila="6" col="0"></td>
+        <td fila="6" col="1"></td>
+        <td fila="6" col="2"></td>
+        <td fila="6" col="3"></td>
+        <td fila="6" col="4"></td>
+        <td fila="6" col="5"></td>
+        <td fila="6" col="6"></td>
+        <td fila="6" col="7"></td>
+        <td fila="6" col="8"></td>
+      </tr>
+      <tr>
+        <td fila="7" col="0"></td>
+        <td fila="7" col="1"></td>
+        <td fila="7" col="2"></td>
+        <td fila="7" col="3"></td>
+        <td fila="7" col="4"></td>
+        <td fila="7" col="5"></td>
+        <td fila="7" col="6"></td>
+        <td fila="7" col="7"></td>
+        <td fila="7" col="8"></td>
+      </tr>
+      <tr>
+        <td fila="8" col="0"></td>
+        <td fila="8" col="1"></td>
+        <td fila="8" col="2"></td>
+        <td fila="8" col="3"></td>
+        <td fila="8" col="4"></td>
+        <td fila="8" col="5"></td>
+        <td fila="8" col="6"></td>
+        <td fila="8" col="7"></td>
+        <td fila="8" col="8"></td>
+      </tr>
+    </table>
+
+    <!-- fin del tablero-->
+  </div>
+
+  <!-- Modal para guardar el tiempo -->
+  <div class="modal fade" id="modalNuevoTiempo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Nuevo tiempo</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="form-group">
+              <label for="recipient-name" class="col-form-label">Nombre:</label>
+              <input type="text" class="form-control" id="recipient-name" />
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">
+            Cerrar
+          </button>
+          <button type="button" id="botonGuardarTiempo" class="btn btn-primary">
+            Guardar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Fin del modal para guardar el tiempo -->
+
+  <!-- Javascript -->
+  <script src="vendors/jquery-3.4.1.min.js"></script>
+  <script src="vendors/bootstrap-4.3.1/js/bootstrap.min.js"></script>
+  <script src="js/juego.js"></script>
+</body>
+
+</html>
